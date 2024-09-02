@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("${HOME}/gcloud_key.json")
+  credentials = file("/home/runner/gcloud_key.json")
   project     = var.project_id
   region      = var.region
 }
