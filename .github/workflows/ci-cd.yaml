@@ -31,7 +31,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var "docker_registry=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api"
+      run: terraform apply -auto-approve -var "docker_registry=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Terraform Init
       run: terraform init
