@@ -3,7 +3,7 @@ terraform {
     // statefile
     bucket  = "timer-api-bucket"
     prefix  = "terraform/state"
-    credentials = file("/home/runner/gcloud_key.json")
+    credentials = "/home/runner/gcloud_key.json"
   }
 }
 
