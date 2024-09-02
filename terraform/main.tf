@@ -13,11 +13,7 @@ provider "google" {
   project     = var.project_id
   region      = var.region
 }
-provider "kubernetes" {
-  host                   = module.gke.endpoint
-  cluster_ca_certificate = module.gke.cluster_ca_certificate
-  token                  = module.gke.token
-}
+
 module "network" {
   source           = "./modules/network"
   network_name     = var.network_name
