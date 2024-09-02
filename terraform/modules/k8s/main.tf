@@ -42,7 +42,7 @@ resource "kubernetes_service" "api_service" {
   }
   spec {
     selector = {
-      app = kubernetes_deployment.api_deployment.metadata[0].labels["app"]
+      app = api
     }
     port {
       port        = var.service_port
