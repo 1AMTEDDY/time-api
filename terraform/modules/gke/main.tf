@@ -32,6 +32,7 @@ module "gke" {
       tags               = var.node_pool_tags
       preemptible        = false
       initial_node_count = 1
+      image_type         = "COS_CONTAINERD"
     }
   ]
 }
