@@ -3,7 +3,11 @@ provider "google" {
   project     = var.project_id
   region      = var.region
 }
-
+provider "kubernetes" {
+  host                   = module.gke.endpoint
+  cluster_ca_certificate = module.gke.cluster_ca_certificate
+  token                  = module.gke.token
+}
 module "network" {
   source           = "./modules/network"
   network_name     = var.network_name
@@ -42,5 +46,6 @@ module "kubernetes" {
   replicas       = 2
   service_name   = "api-service"
   service_port   = 80
+  depends_on = [module.gke]
 }
 
