@@ -9,7 +9,6 @@ terraform {
 
 data "google_container_cluster" "default" {
   name       = var.cluster_name
-  depends_on = [module.gke]
 }
 
 provider "kubernetes" {
