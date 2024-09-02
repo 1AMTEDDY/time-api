@@ -45,7 +45,7 @@ module "iam" {
 }
 
 module "kubernetes" {
-  source         = "./k8s"
+  source         = "./module/k8s"
   namespace_name = "api"
   deployment_name = "api-deployment"
   container_name = "api"
