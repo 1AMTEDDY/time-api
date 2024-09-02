@@ -21,10 +21,11 @@ resource "docker_image" "python_app" {
   build {
     context    = "${path.root}"
     dockerfile = "Dockerfile"
-  }
+    tag        = "registry-1.docker.io/${var.docker_username}/${var.docker_image_name}:latest"
+}
 }
 resource "docker_registry_image" "python_app_registry" {
-  name  = "${var.docker_registry_name}/${var.docker_image_name}:latest"
+  name  = "registry-1.docker.io/${var.docker_registry_name}/${var.docker_image_name}:latest"
 }
 
 variable "docker_image_name" {
