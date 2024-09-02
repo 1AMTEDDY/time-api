@@ -1,14 +1,7 @@
 data "google_client_config" "default" {
   depends_on = [module.gke]
 }
-terraform {
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.0.3"
-    }
-  }
-}
+
 provider "kubernetes" {
   host                   = "https://${module.gke.endpoint}"
   token                  = data.google_client_config.default.access_token
