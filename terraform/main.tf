@@ -1,26 +1,24 @@
 terraform {
   backend "gcs" {
-    // statefile
+    //// statefile
     bucket  = "timer-api-bucket"
     prefix  = "terraform/state"
     credentials = "/home/runner/gcloud_key.json"
+  //  credentials = "/Users/macbook/Downloads/banded-arch-380523-df7e6412c7df.json"
   }
 }
 
-data "google_container_cluster" "default" {
-  name       = var.cluster_name
+data "google_client_config" "default" {
 }
 
 provider "kubernetes" {
-  host  = "https://${data.google_container_cluster.default.endpoint}"
-  token = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(
-    data.google_container_cluster.default.master_auth[0].cluster_ca_certificate,
-  )
+  host                   = "https://${module.gke.gke_cluster_endpoint}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(module.gke.gke_cluster_ca_certificate)
 }
-
 provider "google" {
   credentials = file("/home/runner/gcloud_key.json")
+  //credentials = file("/Users/macbook/Downloads/banded-arch-380523-df7e6412c7df.json")
   project     = var.project_id
   region      = var.region
 }
@@ -65,7 +63,6 @@ module "kubernetes" {
   replicas       = 2
   service_name   = "api-service"
   service_port   = 80
-  cluster_endpoint        = module.gke.endpoint
-  cluster_ca_certificate  = module.gke.ca_certificate
-  depends_on = [ module.gke ]
+  depends_on = [module.gke]
 }
+

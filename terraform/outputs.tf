@@ -12,6 +12,6 @@ output "service_url" {
 }
 
 output "token" {
-  value = data.google_container_cluster.default.access_token
+  value = data.google_client_config.default.access_token
   sensitive = true
 }
