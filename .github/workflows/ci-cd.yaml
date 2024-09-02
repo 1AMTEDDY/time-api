@@ -34,13 +34,13 @@ jobs:
       run: terraform init
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
+      run: terraform apply -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Terraform Init
       run: terraform init
       working-directory: terraform/
     - name: Terraform Plan
-      run: terraform plan -out=tfplan.binary -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
+      run: terraform plan -out=tfplan.binary -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
 
     - name: Convert Terraform Plan to JSON
@@ -54,7 +54,7 @@ jobs:
 
     - name: Terraform Apply
       if: success()
-      run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
+      run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
   verify:
     environment: Development

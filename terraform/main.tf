@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("path-to-service-account.json")
+  credentials = var.credentials
   project     = var.project_id
   region      = var.region
 }
