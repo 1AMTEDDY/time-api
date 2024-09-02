@@ -6,3 +6,5 @@ variable "container_port" {}
 variable "replicas" {}
 variable "service_name" {}
 variable "service_port" {}
+variable "cluster_endpoint" {}
+variable "cluster_ca_certificate" {}

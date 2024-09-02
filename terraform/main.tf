@@ -45,7 +45,7 @@ module "iam" {
 }
 
 module "kubernetes" {
-  source         = "./modules/k8s"
+  source         = "./k8s"
   namespace_name = "api"
   deployment_name = "api-deployment"
   container_name = "api"
@@ -54,6 +54,7 @@ module "kubernetes" {
   replicas       = 2
   service_name   = "api-service"
   service_port   = 80
-  depends_on = [module.gke]
+  cluster_endpoint        = module.gke.endpoint
+  cluster_ca_certificate  = module.gke.ca_certificate
+  depends_on = [ module.gke ]
 }
-
