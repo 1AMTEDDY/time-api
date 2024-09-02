@@ -15,32 +15,33 @@ resource "docker_image" "python_app" {
 
   build {
     context    = "${path.root}"
-    dockerfile = <<-DOCKERFILE
-      FROM python:3.9-slim
-
-      WORKDIR /app
-
-      COPY requirements.txt .
-      RUN pip install --no-cache-dir -r requirements.txt
-
-      COPY . .
-
-      RUN pip install --no-cache-dir pytest
-
-      RUN pytest --disable-warnings
-
-      EXPOSE 8080
-
-      CMD ["python", "app.py"]
-    DOCKERFILE
+    dockerfile = "Dockerfile"
   }
 }
 resource "docker_registry_image" "python_app_registry" {
   name  = "${var.docker_registry}/${var.docker_image_name}:latest"
+  # You may need to configure auth manually, depending on your environment
+  provisioner "local-exec" {
+    command = "docker login -u ${var.docker_username} -p ${var.docker_password} ${var.docker_registry}"
+  }
 }
+
 variable "docker_image_name" {
 }
 variable "docker_registry" {
   description = "Docker registry URL"
   default     = ""  # Replace with your Docker Hub username
+}
+
+
+variable "docker_registry" {
+  default = "docker.io"
+}
+
+variable "docker_username" {
+  description = "Docker registry username"
+}
+
+variable "docker_password" {
+  description = "Docker registry password"
 }
