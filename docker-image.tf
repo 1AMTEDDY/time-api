@@ -16,16 +16,16 @@ provider "docker" {
 }
 
 resource "docker_image" "python_app" {
-  name = "${var.docker_image_name}:latest"
+  name = "registry-1.docker.io/${var.docker_username}/${var.docker_image_name}:latest"
 
   build {
     context    = "${path.root}"
     dockerfile = "Dockerfile"
-    tag        = "registry-1.docker.io/${var.docker_username}/${var.docker_image_name}:latest"
+   // tag        = "registry-1.docker.io/${var.docker_username}/${var.docker_image_name}:latest"
 }
 }
 resource "docker_registry_image" "python_app_registry" {
-  name  = "registry-1.docker.io/${var.docker_registry_name}/${var.docker_image_name}:latest"
+  name  = "${docker_image.python_app.name}"
 }
 
 variable "docker_image_name" {
