@@ -6,7 +6,6 @@ variable "subnetwork_name" {}
 variable "ip_range_pods" {}
 variable "ip_range_services" {}
 variable "node_pool_tags" {
-  type = string
   default = "gke-api-nodes"
 }
 //variable "enable_private_endpoint" { default = true }

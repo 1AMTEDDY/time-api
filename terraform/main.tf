@@ -23,7 +23,7 @@ module "gke" {
   subnetwork_name    = module.network.subnetwork_name
   ip_range_pods      = var.ip_range_pods
   ip_range_services  = var.ip_range_services
-  node_pool_tags    = ["gke-api-nodes"]
+  node_pool_tags    = "gke-api-nodes"
 }
 
 module "iam" {
