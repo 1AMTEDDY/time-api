@@ -40,7 +40,7 @@ jobs:
       run: terraform init
       working-directory: terraform/
     - name: Terraform Plan Infrastrusture
-      run: terraform plan -out=tfplan.binary -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
+      run: terraform plan -out=tfplan.binary -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
 
     - name: Convert Terraform Plan to JSON
@@ -54,7 +54,7 @@ jobs:
 
     - name: Terraform Apply Infrastrusture
       if: success()
-      run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
+      run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
   verify:
     environment: Development

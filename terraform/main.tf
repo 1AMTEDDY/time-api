@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = var.credentials
+  credentials = file("${HOME}/gcloud_key.json")
   project     = var.project_id
   region      = var.region
 }
