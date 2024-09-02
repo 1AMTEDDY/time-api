@@ -8,6 +8,15 @@ resource "google_compute_subnetwork" "subnetwork" {
   ip_cidr_range = var.subnet_cidr
   network       = google_compute_network.vpc_network.id
   region        = var.region
+  secondary_ip_range {
+    range_name    = "pods-range"
+    ip_cidr_range = var.ip_range_pods
+  }
+
+  secondary_ip_range {
+    range_name    = "services-range"
+    ip_cidr_range = var.ip_range_services
+  }
 }
 
 resource "google_compute_router" "router" {

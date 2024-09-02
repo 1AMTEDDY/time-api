@@ -22,6 +22,8 @@ module "network" {
   region           = var.region
   router_name      = "nat-router"
   nat_name         = "nat-gateway"
+  ip_range_pods = var.ip_range_pods
+  ip_range_services = var.ip_range_services
 }
 
 module "gke" {
@@ -31,8 +33,8 @@ module "gke" {
   region             = var.region
   network_name       = module.network.network_name
   subnetwork_name    = module.network.subnetwork_name
-  ip_range_pods      = var.ip_range_pods
-  ip_range_services  = var.ip_range_services
+  ip_range_pods      = "pods-range"
+  ip_range_services  = "services-range"
   node_pool_tags    = "gke-api-nodes"
 }
 
