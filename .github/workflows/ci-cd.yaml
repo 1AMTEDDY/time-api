@@ -26,7 +26,9 @@ jobs:
         echo ${{ secrets.GCP_KEY }} | base64 --decode > ${HOME}/gcloud_key.json
         gcloud auth activate-service-account --key-file=${HOME}/gcloud_key.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
-
+    - name: Login to Docker Hub
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
     - name: Terraform Init Dockerfile
       run: terraform init
 
