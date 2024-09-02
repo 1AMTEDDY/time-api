@@ -1,6 +1,5 @@
 variable "project_id" {}
 variable "container_image" {}
-variable "credentials" {}
 variable "region" { default = "us-central1" }
 variable "network_name" { default = "vpc-network" }
 variable "subnetwork_name" { default = "subnet-1" }
