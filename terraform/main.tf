@@ -6,7 +6,7 @@ terraform {
     credentials = "/home/runner/gcloud_key.json"
   }
 }
-data "google_client_config" "default" {}
+
 
 provider "google" {
   credentials = file("/home/runner/gcloud_key.json")
