@@ -9,7 +9,7 @@ terraform {
 provider "docker" {
   host = "unix:///var/run/docker.sock"
   registry_auth {
-    address  = var.docker_registry_name
+    address  = "registry-1.docker.io"
     username = var.docker_username
     password = var.docker_password
   }
