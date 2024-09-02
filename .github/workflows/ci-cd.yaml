@@ -68,12 +68,15 @@ jobs:
     needs: build-and-deploy
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Install curl
       run: sudo apt-get install -y curl
 
     - name: Verify API Endpoint
       run: |
-        API_URL=$(terraform output -raw api_url)
+        API_URL=$(http://34.70.29.153/time)
         RESPONSE=$(curl -s $API_URL/time)
         if echo "$RESPONSE" | grep -q '"current_time"'; then
           echo "API is accessible and returned the correct response."
