@@ -6,7 +6,6 @@ resource "docker_image" "python_app" {
   name = "${var.docker_image_name}:latest"
 
   build {
-    context    = "${path.root}"
     dockerfile = <<-DOCKERFILE
       FROM python:3.9-slim
 
