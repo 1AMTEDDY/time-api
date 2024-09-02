@@ -19,7 +19,7 @@ resource "docker_image" "python_app" {
   }
 }
 resource "docker_registry_image" "python_app_registry" {
-  name  = "${var.docker_registry}/${var.docker_image_name}:latest"
+  name  = "${var.docker_registry_name}/${var.docker_image_name}:latest"
   # You may need to configure auth manually, depending on your environment
   provisioner "local-exec" {
     command = "docker login -u ${var.docker_username} -p ${var.docker_password} ${var.docker_registry}"
@@ -28,7 +28,7 @@ resource "docker_registry_image" "python_app_registry" {
 
 variable "docker_image_name" {
 }
-variable "docker_registry" {
+variable "docker_registry_name" {
   description = "Docker registry URL"
   default     = ""  # Replace with your Docker Hub username
 }
