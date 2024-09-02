@@ -76,7 +76,7 @@ jobs:
 
     - name: Verify API Endpoint
       run: |
-        API_URL=$(http://34.70.29.153/time)
+        API_URL=$(http://34.70.29.153)
         RESPONSE=$(curl -s $API_URL/time)
         if echo "$RESPONSE" | grep -q '"current_time"'; then
           echo "API is accessible and returned the correct response."
