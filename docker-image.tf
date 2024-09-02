@@ -14,6 +14,7 @@ resource "docker_image" "python_app" {
   name = "${var.docker_image_name}:latest"
 
   build {
+    context    = "${path.root}"
     dockerfile = <<-DOCKERFILE
       FROM python:3.9-slim
 
@@ -36,7 +37,6 @@ resource "docker_image" "python_app" {
 }
 resource "docker_registry_image" "python_app_registry" {
   name  = "${var.docker_registry}/${var.docker_image_name}:latest"
-  image = docker_image.python_app.image_id
 }
 variable "docker_image_name" {
 }
