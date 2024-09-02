@@ -36,7 +36,7 @@ module "kubernetes" {
   namespace_name = "api"
   deployment_name = "api-deployment"
   container_name = "api"
-  container_image = "gcr.io/${var.project_id}/api:latest"
+  container_image = var.container_image
   container_port = 8080
   replicas       = 2
   service_name   = "api-service"
