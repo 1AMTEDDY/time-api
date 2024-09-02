@@ -1,3 +1,11 @@
+terraform {
+  backend "gcs" {
+    // statefile
+    bucket  = "timer-api-bucket"
+    prefix  = "terraform/state"
+  }
+}
+
 provider "google" {
   credentials = file("/home/runner/gcloud_key.json")
   project     = var.project_id
