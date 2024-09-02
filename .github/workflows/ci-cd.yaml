@@ -33,13 +33,13 @@ jobs:
     - name: Terraform Init Dockerfile
       run: terraform init
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
+    - name: Terraform Apply Dockerfile
+      run: terraform apply -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
 
-    - name: Terraform Init
+    - name: Terraform Init Infrastrusture
       run: terraform init
       working-directory: terraform/
-    - name: Terraform Plan
+    - name: Terraform Plan Infrastrusture
       run: terraform plan -out=tfplan.binary -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
 
@@ -52,7 +52,7 @@ jobs:
         opa eval --input tfplan.json --data policy.rego "data.tfplan.deny"
       working-directory: terraform/
 
-    - name: Terraform Apply
+    - name: Terraform Apply Infrastrusture
       if: success()
       run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "credentials=${{ secrets.GCP_KEY }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
