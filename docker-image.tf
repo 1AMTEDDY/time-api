@@ -8,6 +8,11 @@ terraform {
 }
 provider "docker" {
   host = "unix:///var/run/docker.sock"
+  registry_auth {
+    address  = "https://registry-1.docker.io/v2/"
+    username = var.docker_username
+    password = var.docker_password
+  }
 }
 
 resource "docker_image" "python_app" {
@@ -20,10 +25,6 @@ resource "docker_image" "python_app" {
 }
 resource "docker_registry_image" "python_app_registry" {
   name  = "${var.docker_registry_name}/${var.docker_image_name}:latest"
-  # You may need to configure auth manually, depending on your environment
-  provisioner "local-exec" {
-    command = "docker login -u ${var.docker_username} -p ${var.docker_password} ${var.docker_registry}"
-  }
 }
 
 variable "docker_image_name" {
