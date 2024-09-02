@@ -20,7 +20,11 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
-
+    - name: Install OPA
+      run: |
+        curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+        chmod +x opa
+        sudo mv opa /usr/local/bin/
     - name: Authenticate to Google Cloud
       run: |
         echo ${{ secrets.GCP_KEY }} | base64 --decode > ${HOME}/gcloud_key.json
