@@ -10,6 +10,6 @@ output "gke_cluster_ca_certificate" {
   value = module.gke.ca_certificate
 }
 output "token" {
-  value = data.google_client_config.default.access_token
+  value = data.google_container_cluster.default.access_token
   sensitive = true
 }
