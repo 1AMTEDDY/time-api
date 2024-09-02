@@ -26,12 +26,12 @@ jobs:
         chmod +x opa
         sudo mv opa /usr/local/bin/
     - name: Authenticate to Google Cloud
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_KEY }}
       run: |
         echo ${{ secrets.GCP_KEY }} | base64 --decode > ${HOME}/gcloud_key.json
         gcloud auth activate-service-account --key-file=${HOME}/gcloud_key.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: /home/runner/gcloud_key.json
     - name: Login to Docker Hub
       run: |
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
