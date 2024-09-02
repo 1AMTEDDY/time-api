@@ -43,20 +43,4 @@ module "kubernetes" {
   service_name   = "api-service"
   service_port   = 80
 }
-resource "google_storage_bucket" "terraform_state" {
-  name     = "my-terraform-state-bucket"
-  location = var.region
 
-  versioning {
-    enabled = true
-  }
-
-  lifecycle_rule {
-    action {
-      type = "Delete"
-    }
-    condition {
-      age = 365
-    }
-  }
-}
