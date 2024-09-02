@@ -1,3 +1,6 @@
+data "google_container_cluster" "default" {
+  name       = var.cluster_name
+}
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google"
   version = "~> 18.0"

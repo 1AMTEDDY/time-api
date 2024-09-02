@@ -6,13 +6,18 @@ terraform {
     credentials = "/home/runner/gcloud_key.json"
   }
 }
-data "google_client_config" "default" {
+
+data "google_container_cluster" "default" {
+  name       = var.cluster_name
+  depends_on = [module.gke-cluster]
 }
 
 provider "kubernetes" {
-  host                   = "https://${module.gke.endpoint}"
-  token                  = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(module.gke.ca_certificate)
+  host  = "https://${data.google_container_cluster.default.endpoint}"
+  token = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(
+    data.google_container_cluster.default.master_auth[0].cluster_ca_certificate,
+  )
 }
 
 provider "google" {
