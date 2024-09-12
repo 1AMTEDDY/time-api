@@ -42,8 +42,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Apply Dockerfile
-      run: terraform apply -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
-
+      run: terraform destroy -auto-approve -var "docker_registry_name=${{ secrets.DOCKER_USERNAME }}" -var "docker_image_name=api" -var "docker_username=${{ secrets.DOCKER_USERNAME }}" -var "docker_password=${{ secrets.DOCKER_PASSWORD }}"
     - name: Terraform Init Infrastrusture
       run: terraform init
       working-directory: terraform/
@@ -62,7 +61,7 @@ jobs:
 
     - name: Terraform Apply Infrastrusture
       if: success()
-      run: terraform apply -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
+      run: terraform destroy -auto-approve -var "project_id=${{ secrets.GCP_PROJECT_ID }}" -var "container_image=${{ secrets.DOCKER_USERNAME }}/api:latest" -var-file="roles.tfvars"
       working-directory: terraform/
   verify:
     environment: Development
